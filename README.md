@@ -31,73 +31,45 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 ## PROGRAM
 ~~~
-#include <stdio.h> 
-#include <string.h> 
-#include <ctype.h> 
- 
-// Function to encrypt the text using Vigenère cipher 
-void encrypt(char* plaintext, char* key, char* ciphertext) { 
-    int textLen = strlen(plaintext); 
-    int keyLen = strlen(key); 
- 
-    for (int i = 0, j = 0; i < textLen; i++) { 
-        char p = plaintext[i]; 
- 
-        if (isalpha(p)) { 
-            char base = isupper(p) ? 'A' : 'a'; 
-            char k = tolower(key[j % keyLen]) - 'a'; 
-            ciphertext[i] = (p - base + k) % 26 + base; 
-            j++; 
-        } else { 
-            ciphertext[i] = p; // keep non-alphabetic characters as-is 
-        } 
-    } 
- 
-    ciphertext[textLen] = '\0'; 
-} 
- 
-// Function to decrypt the text using Vigenère cipher 
-void decrypt(char* ciphertext, char* key, char* plaintext) { 
-    int textLen = strlen(ciphertext); 
-    int keyLen = strlen(key); 
- 
-    for (int i = 0, j = 0; i < textLen; i++) { 
-        char c = ciphertext[i]; 
- 
-        if (isalpha(c)) { 
-            char base = isupper(c) ? 'A' : 'a'; 
-            char k = tolower(key[j % keyLen]) - 'a'; 
-            plaintext[i] = (c - base - k + 26) % 26 + base; 
-            j++; 
-        } else { 
-            plaintext[i] = c; // keep non-alphabetic characters as-is 
-        } 
-    } 
- 
-    plaintext[textLen] = '\0'; 
-} 
- 
-int main() { 
-    char plaintext[1024]; 
-    char key[1024]; 
-    char ciphertext[1024]; 
-char decrypted[1024]; 
-printf("Enter plaintext: "); 
-fgets(plaintext, sizeof(plaintext), stdin); 
-plaintext[strcspn(plaintext, "\n")] = '\0'; // remove newline 
-printf("Enter key (alphabetic only): "); 
-fgets(key, sizeof(key), stdin); 
-key[strcspn(key, "\n")] = '\0'; // remove newline 
-encrypt(plaintext, key, ciphertext); 
-printf("Encrypted text: %s\n", ciphertext); 
-decrypt(ciphertext, key, decrypted); 
-printf("Decrypted text: %s\n", decrypted); 
-return 0; 
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+int main()
+{
+    char plain[100], key[100], cipher[100];
+    int i, k = 0;
+    printf("Enter Plain Text: ");
+    scanf("%s", plain);
+    printf("Enter Key: ");
+    scanf("%s", key);
+    int pLen = strlen(plain);
+    int kLen = strlen(key);
+    for(i = 0; i < pLen; i++)
+    {
+        if(isalpha(plain[i]))
+        {
+            int p = toupper(plain[i]) - 'A';
+            int keyVal = toupper(key[k % kLen]) - 'A';
+
+            cipher[i] = (p + keyVal) % 26 + 'A';
+            k++;
+        }
+        else
+        {
+            cipher[i] = plain[i]; 
+        }
+    }
+
+    cipher[i] = '\0';
+    printf("\nEncrypted Cipher Text: %s\n", cipher);
 }
+
 
 ~~~
 ## OUTPUT
 
-<img width="491" height="250" alt="image" src="https://github.com/user-attachments/assets/87a78768-fa01-4904-9144-1654aceae9c8" />
+<img width="1917" height="1198" alt="Screenshot 2026-10-30 184324" src="https://github.com/user-attachments/assets/d5eca11a-6461-4d4b-8a9a-92513e287adb" />
+
 
 ## RESULT
+Thus, the Vigenere Cipher substitution technique was successfully implemented using a C program. The plaintext was encrypted correctly using a repeating keyword to generate the corresponding ciphertext.
